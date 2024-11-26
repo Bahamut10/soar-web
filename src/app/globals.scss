@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.wrapper {
+  @apply font-inter container mx-auto px-3 py-5 laptop:py-8 laptop:px-10;
+}
+
+.icon {
+  @apply relative flex items-center justify-center text-gloomy-blue w-12 h-12 rounded-full bg-cloudy-grey transition ease-in-out delay-75;
+
+  &:hover {
+    @apply text-trusted-blue cursor-pointer transition ease-in-out delay-75;
+  }
+}
