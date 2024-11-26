@@ -1,13 +1,13 @@
 import Button from '@/components/Button';
-import { BUTTON_SIZES, BUTTON_VARIANTS } from '@/components/Button/enum';
+import { BUTTON_VARIANTS } from '@/components/Button/enum';
 import Input from '@/components/Input';
 import Text from '@/components/Text';
 import { TEXT_VARIANTS } from '@/components/Text/enum';
-import clsx from 'clsx';
 import Image from 'next/image';
+import { useCallback, useMemo, useState } from 'react';
 import { MdChevronLeft, MdChevronRight, MdSend } from 'react-icons/md';
+import useBreakpoint, { DEVICES } from '../../../../breakpoints';
 import { dataPerson, DataPerson } from './data';
-import { useCallback, useState } from 'react';
 
 type UserProfileProps = {
   className?: string;
@@ -25,7 +25,7 @@ function UserProfile(props: UserProfileProps) {
         alt="User Profile Picture"
         width={100}
         height={100}
-        className="max-w-[unset]"
+        className="max-[517px]:w-[80px] max-[517px]:h-[80px] max-w-[unset]"
       />
       <div className="mt-3 flex flex-col gap-1">
         <Text
@@ -46,11 +46,26 @@ function UserProfile(props: UserProfileProps) {
 }
 
 export default function QuickTransfer() {
+  const breakpoint = useBreakpoint();
+
   const [moveLeft, setMoveLeft] = useState(0);
 
+  const profileWidth = useMemo(() => {
+    if (breakpoint > DEVICES.TABLET) return 120;
+    return 80;
+  }, [breakpoint]);
+
+  const profileWidthToSkip = useMemo(() => {
+    if (breakpoint > DEVICES.TABLET) return 140;
+    return 120;
+  }, [breakpoint]);
+
+  console.log(breakpoint, profileWidthToSkip);
+
   const handleSlideLeft = useCallback(() => {
-    if (moveLeft < 240) setMoveLeft((prev) => prev + 140);
-  }, [moveLeft]);
+    if (moveLeft < (dataPerson.length - 3) * profileWidth)
+      setMoveLeft((prev) => prev + profileWidthToSkip);
+  }, [moveLeft, profileWidth, profileWidthToSkip]);
 
   const handleSlideRight = useCallback(() => {
     setMoveLeft(0);
@@ -59,7 +74,7 @@ export default function QuickTransfer() {
   return (
     <div className="tile !p-8">
       <div className="flex gap-8 items-center">
-        <div className="flex gap-10 w-[400px] overflow-hidden">
+        <div className="max-[517px]:w-[320px] flex gap-10 w-[400px] overflow-hidden">
           {dataPerson.map((person) => (
             <UserProfile
               key={person.photo}
