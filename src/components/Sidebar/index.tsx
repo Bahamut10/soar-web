@@ -27,7 +27,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-12 px-10 py-5 border-0 border-r-2 border-solid border-shiny-grey min-h-svh">
+    <div className="flex flex-col gap-12 px-10 py-5 border-0 border-r-2 border-solid border-shiny-grey bg-white min-h-svh">
       <div className="flex gap-2 items-center">
         <MdTask className="text-charcoal" size={35} />
         <Text
