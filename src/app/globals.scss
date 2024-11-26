@@ -13,3 +13,7 @@
     @apply text-trusted-blue cursor-pointer transition ease-in-out delay-75;
   }
 }
+
+.tile {
+  @apply p-6 bg-white rounded-3xl;
+}

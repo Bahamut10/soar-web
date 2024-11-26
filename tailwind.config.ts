@@ -33,7 +33,12 @@ export default {
       'gloomy-blue': '#8BA3CB',
       'navy-blue': '#343C6A',
       'trusted-blue': '#396AFF',
+      'night-charcoal': '#5B5A6F',
       charcoal: '#2B2B2B',
+      black: '#000000',
+
+      'rose-red': '#FF4B4A',
+      'leaf-green': '#41D4A8',
     },
   },
   plugins: [],
