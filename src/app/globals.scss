@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-white;
+}
+
 .wrapper {
-  @apply font-inter container mx-auto px-3 py-5 laptop:py-8 laptop:px-10;
+  @apply font-inter container mx-auto px-6 py-5 laptop:py-8 laptop:px-10;
 }
 
 .icon {
@@ -15,5 +19,25 @@
 }
 
 .tile {
-  @apply p-6 bg-white rounded-3xl;
+  @apply laptop:bg-white p-6 rounded-3xl;
+}
+
+.nav__strips {
+  @apply relative h-[2px] w-6 bg-black transition-all duration-300 left-0 opacity-100 top-0;
+
+  &:nth-child(2) {
+    @apply w-8;
+  }
+
+  &--open {
+    &:nth-child(1) {
+      @apply transition-all w-8 duration-300 rotate-45 top-3;
+    }
+    &:nth-child(2) {
+      @apply transition-all duration-300 left-full opacity-0;
+    }
+    &:nth-child(3) {
+      @apply transition-all w-8 duration-300 -rotate-45 -top-1;
+    }
+  }
 }

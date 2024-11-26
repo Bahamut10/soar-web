@@ -24,7 +24,7 @@ export default function RootLayout({
           </div>
           <div className="flex-1">
             <Navbar />
-            <div className="bg-cloudy-grey">{children}</div>
+            <div className="laptop:bg-cloudy-grey">{children}</div>
           </div>
         </div>
       </body>
