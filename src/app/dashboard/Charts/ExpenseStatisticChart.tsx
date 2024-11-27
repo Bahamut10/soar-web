@@ -1,57 +1,49 @@
-import React from 'react';
 import {
-  PieChart,
-  Pie,
   Cell,
-  Tooltip,
   Legend,
+  Pie,
+  PieChart,
   ResponsiveContainer,
+  Tooltip,
 } from 'recharts';
 
-import theme from '../../../../tailwind.config';
-
-const expenseData = [
-  { name: 'Entertainment', value: 30 },
-  { name: 'Bill Expense', value: 15 },
-  { name: 'Investment', value: 20 },
-  { name: 'Others', value: 35 },
-];
+import { ExpenseStatistics } from '@/types/dashboard';
+import Loading from '@/components/Loading';
 
 const COLORS = [
-  'rgba(54, 79, 107, 1)', // Navy
-  'rgba(255, 129, 48, 1)', // Orange
-  'rgba(54, 162, 235, 1)', // Blue
-  'rgba(0, 0, 0, 1)', // Black
+  'rgba(54, 79, 107, 1)',
+  'rgba(255, 129, 48, 1)',
+  'rgba(54, 162, 235, 1)',
+  'rgba(0, 0, 0, 1)',
 ];
 
-export default function ExpenseStatisticChart() {
-  const { theme: _theme } = theme;
-
+export default function ExpenseStatisticChart({
+  data,
+  isLoading,
+}: {
+  data: Array<ExpenseStatistics>;
+  isLoading: boolean;
+}) {
   return (
     <div className="tile">
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={expenseData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%" // Position the pie in the center horizontally
-            cy="50%" // Position the pie in the center vertically
-            outerRadius="80%" // Radius of the pie chart
-            fill="#8884d8" // Default color (can be overridden by `Cell`)
-            label
-          >
-            {expenseData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie data={data} dataKey="value" nameKey="name" label>
+              {data?.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 }

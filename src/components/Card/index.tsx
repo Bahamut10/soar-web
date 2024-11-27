@@ -1,21 +1,26 @@
+import { formatCurrency, maskCardNumber } from '@/utils/helpers';
+import clsx from 'clsx';
 import Image from 'next/image';
+import { useMemo } from 'react';
 import Text from '../Text';
 import { TEXT_VARIANTS } from '../Text/enum';
-import { useMemo } from 'react';
-import { THEMES, Themes } from './enums';
-import clsx from 'clsx';
-import { formatCurrency, maskCardNumber } from '@/utils/helpers';
+import { THEMES } from './enums';
 
 type CardProps = {
   balance: number;
   cardNumber: string;
   holderName: string;
-  theme: keyof Themes;
+  cardOperator: string;
+  theme: keyof typeof THEMES;
   valid: string;
 };
 
+const CARD_OPERATORS = {
+  MASTERCARD: 'Mastercard',
+};
+
 export default function Card(props: CardProps) {
-  const { balance, cardNumber, holderName, theme, valid } = props;
+  const { balance, cardNumber, cardOperator, holderName, theme, valid } = props;
 
   const _themeClassBody = useMemo(() => {
     switch (theme) {
@@ -26,7 +31,7 @@ export default function Card(props: CardProps) {
       default:
         return '';
     }
-  }, []);
+  }, [theme]);
 
   const _themeClassFooter = useMemo(() => {
     switch (theme) {
@@ -37,7 +42,16 @@ export default function Card(props: CardProps) {
       default:
         return '';
     }
-  }, []);
+  }, [theme]);
+
+  const _cardOperator = useMemo(() => {
+    switch (cardOperator) {
+      case CARD_OPERATORS.MASTERCARD:
+        return `/ic-card-chip-for-${theme?.toLowerCase()}.png`;
+      default:
+        return '';
+    }
+  }, [cardOperator, theme]);
 
   return (
     <div className="border-2 border-solid border-shiny-grey rounded-3xl w-full overflow-hidden flex flex-col">
@@ -52,11 +66,11 @@ export default function Card(props: CardProps) {
             </Text>
           </div>
           <Image
-            src={`/ic-card-chip-for-${theme?.toLowerCase()}.png`}
+            src={_cardOperator}
             alt="Card Chip"
             width={35}
             height={35}
-            className="object-contain"
+            className="w-auto h-auto object-contain"
           />
         </div>
         <div className="flex">

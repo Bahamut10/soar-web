@@ -1,52 +1,52 @@
-import React from 'react';
 import {
-  ResponsiveContainer,
-  LineChart,
+  CartesianGrid,
   Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
 } from 'recharts';
 
+import { BalanceHistory } from '@/types/dashboard';
 import theme from '../../../../tailwind.config';
+import Loading from '@/components/Loading';
 
-const data = [
-  { month: 'Jul', balance: 100 },
-  { month: 'Aug', balance: 300 },
-  { month: 'Sep', balance: 500 },
-  { month: 'Oct', balance: 800 },
-  { month: 'Nov', balance: 200 },
-  { month: 'Dec', balance: 600 },
-  { month: 'Jan', balance: 650 },
-];
-
-export default function BalanceHistoryChart() {
+export default function BalanceHistoryChart({
+  data,
+  isLoading,
+}: {
+  data: Array<BalanceHistory>;
+  isLoading: boolean;
+}) {
   const { theme: _theme } = theme;
 
   return (
     <div className="tile">
-      <ResponsiveContainer width="100%" height={260}>
-        <LineChart
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="balance"
-            stroke={_theme.colors['trusted-blue']}
-            strokeWidth={4}
-            activeDot={{
-              r: 8,
-            }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ResponsiveContainer width="100%" height={260}>
+          <LineChart
+            data={data}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="balance"
+              stroke={_theme.colors['trusted-blue']}
+              strokeWidth={4}
+              activeDot={{
+                r: 8,
+              }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 }

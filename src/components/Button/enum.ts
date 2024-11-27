@@ -1,21 +1,10 @@
-export interface ButtonVariants {
-  PRIMARY: 'PRIMARY';
-  SECONDARY: 'SECONDARY';
-}
-
-export interface ButtonSizes {
-  SM: 'SM';
-  MD: 'MD';
-  LG: 'LG';
-}
-
-export const BUTTON_VARIANTS: ButtonVariants = {
+export const BUTTON_VARIANTS = {
   PRIMARY: 'PRIMARY',
   SECONDARY: 'SECONDARY',
-};
+} as const;
 
-export const BUTTON_SIZES: ButtonSizes = {
+export const BUTTON_SIZES = {
   SM: 'SM',
   MD: 'MD',
   LG: 'LG',
-};
+} as const;
