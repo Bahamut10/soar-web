@@ -14,17 +14,17 @@ export default function DashboardPage() {
     <div className="wrapper">
       <div className="max-desktop:flex-col flex gap-5">
         <GridBox title="My Cards" cta="See All" containerClassName="flex-[2]">
-          <div className="max-desktop:flex-col flex gap-3">
+          <div className="max-laptop:flex-col desktop:max-[1460px]:flex-col flex gap-3">
             <Card
               balance={6000}
-              cardNumber="3778 **** **** 1234"
+              cardNumber="3778 1234 5677 1234"
               valid="12/22"
               holderName="Eddy Cusuma"
               theme={THEMES.DARK}
             />
             <Card
               balance={6000}
-              cardNumber="3778 **** **** 1234"
+              cardNumber="3778 1234 5677 1234"
               valid="12/22"
               holderName="Eddy Cusuma"
               theme={THEMES.LIGHT}

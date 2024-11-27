@@ -60,8 +60,6 @@ export default function QuickTransfer() {
     return 120;
   }, [breakpoint]);
 
-  console.log(breakpoint, profileWidthToSkip);
-
   const handleSlideLeft = useCallback(() => {
     if (moveLeft < (dataPerson.length - 3) * profileWidth)
       setMoveLeft((prev) => prev + profileWidthToSkip);

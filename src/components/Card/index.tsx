@@ -4,7 +4,7 @@ import { TEXT_VARIANTS } from '../Text/enum';
 import { useMemo } from 'react';
 import { THEMES, Themes } from './enums';
 import clsx from 'clsx';
-import { formatCurrency } from '@/utils/helpers';
+import { formatCurrency, maskCardNumber } from '@/utils/helpers';
 
 type CardProps = {
   balance: number;
@@ -74,7 +74,7 @@ export default function Card(props: CardProps) {
         className={clsx('flex justify-between p-6 flex-1', _themeClassFooter)}
       >
         <Text variant={TEXT_VARIANTS.HEADING5} className="font-semibold">
-          {cardNumber}
+          {maskCardNumber(cardNumber)}
         </Text>
         <Image
           src={`/ic-mastercard-for-${theme?.toLowerCase()}.png`}

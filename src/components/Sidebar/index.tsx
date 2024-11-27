@@ -1,5 +1,8 @@
 'use client';
 
+import { useRootContext } from '@/app/Context';
+import clsx from 'clsx';
+import { useMemo, useState } from 'react';
 import {
   MdAccountCircle,
   MdAreaChart,
@@ -12,12 +15,13 @@ import {
   MdPayments,
   MdTask,
 } from 'react-icons/md';
-import MenuItem from './MenuItem';
-import { useMemo, useState } from 'react';
-import { TEXT_VARIANTS } from '../Text/enum';
 import Text from '../Text';
+import { TEXT_VARIANTS } from '../Text/enum';
+import MenuItem from './MenuItem';
 
 export default function Sidebar() {
+  const { isNavbarOpen } = useRootContext();
+
   const [active, setActive] = useState(false);
 
   const _iconProps = useMemo(() => {
@@ -27,7 +31,12 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-12 px-10 py-5 border-0 border-r-2 border-solid border-shiny-grey bg-white min-h-svh max-laptop:hidden">
+    <div
+      className={clsx(
+        'max-laptop:fixed max-laptop:-left-full max-laptop:w-full max-laptop:top-[88px] flex flex-col gap-12 px-10 py-5 border-0 border-r-2 border-solid z-10 border-shiny-grey bg-white min-h-svh transition-all ease-linear duration-300',
+        isNavbarOpen ? 'max-laptop:left-0' : ''
+      )}
+    >
       <div className="flex gap-2 items-center">
         <MdTask className="text-charcoal" size={35} />
         <Text
@@ -37,7 +46,7 @@ export default function Sidebar() {
           Soar Task
         </Text>
       </div>
-      <div className="flex flex-col gap-8">
+      <div className="max-[]::max-h-[500px] flex flex-col gap-8 overflow-y-scroll">
         <MenuItem
           icon={<MdHome {..._iconProps} />}
           title="Dashboard"

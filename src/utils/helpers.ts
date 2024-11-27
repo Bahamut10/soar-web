@@ -6,3 +6,11 @@ export function formatCurrency(balance: number) {
 
   return _balance;
 }
+
+export function maskCardNumber(cardNumber: string) {
+  const firstFourDigits = cardNumber.slice(0, 4);
+  const lastFourDigits = cardNumber.slice(-4);
+  const maskedDigits = '*'.repeat(cardNumber.length - 8);
+
+  return `${firstFourDigits} ${maskedDigits} ${lastFourDigits}`;
+}
