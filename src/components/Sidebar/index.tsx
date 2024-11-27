@@ -1,6 +1,7 @@
 import { useRootContext } from '@/app/Context';
 import clsx from 'clsx';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { ReactNode, useCallback, useState } from 'react';
 import {
   MdAccountCircle,
   MdAreaChart,
@@ -69,13 +70,14 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname();
   const { isNavbarOpen, toggleNavbar } = useRootContext();
 
-  const [active, setActive] = useState('dashboard');
+  const [active, setActive] = useState(pathname);
 
   const handlePickMenu = useCallback(
     (item: { title: string; href: string; icon: ReactNode }) => {
-      setActive(item.title.toLowerCase());
+      setActive(item.href.toLowerCase());
       toggleNavbar();
     },
     [toggleNavbar]
@@ -101,7 +103,7 @@ export default function Sidebar() {
         {menuItems.map((item) => (
           <MenuItem
             key={item.title}
-            active={active === item.title.toLowerCase()}
+            active={active === item.href.toLowerCase()}
             href={item.href}
             icon={item.icon}
             onClick={() => handlePickMenu(item)}

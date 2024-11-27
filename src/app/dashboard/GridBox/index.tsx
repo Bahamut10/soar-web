@@ -1,5 +1,3 @@
-import Card from '@/components/Card';
-import { THEMES } from '@/components/Card/enums';
 import Text from '@/components/Text';
 import { TEXT_VARIANTS } from '@/components/Text/enum';
 import clsx from 'clsx';

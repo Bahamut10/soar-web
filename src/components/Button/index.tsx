@@ -1,18 +1,13 @@
 import { useMemo } from 'react';
-import {
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
-  ButtonSizes,
-  ButtonVariants,
-} from './enum';
+import { BUTTON_SIZES, BUTTON_VARIANTS } from './enum';
 import clsx from 'clsx';
 
 type ButtonProps = {
   as?: keyof JSX.IntrinsicElements;
   children: React.ReactNode;
   className?: string;
-  size?: keyof ButtonSizes;
-  variant: keyof ButtonVariants;
+  size?: keyof typeof BUTTON_SIZES;
+  variant: keyof typeof BUTTON_VARIANTS;
 };
 
 export default function Button(props: ButtonProps) {
