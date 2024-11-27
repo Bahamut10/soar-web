@@ -43,7 +43,7 @@ export default function DashboardPage() {
           <ExpenseStatisticChart />
         </GridBox>
       </div>
-      <div className=" max-desktop:flex-col flex gap-5 mt-6">
+      <div className="max-laptop:flex-col flex gap-5 mt-6">
         <GridBox title="Quick Transfer" containerClassName="flex-1">
           <QuickTransfer />
         </GridBox>

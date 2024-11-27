@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white;
+  @apply bg-cloudy-grey;
 }
 
 .wrapper {
   @apply font-inter container mx-auto p-5 laptop:py-8 laptop:px-10;
 }
 
-.icon {
-  @apply relative flex items-center justify-center text-gloomy-blue w-12 h-12 rounded-full bg-cloudy-grey transition ease-in-out delay-75;
+.button__icon {
+  @apply relative flex items-center justify-center text-gloomy-blue w-12 h-12 rounded-full bg-cloudy-grey transition-all ease-in-out duration-300 border border-solid border-rainy-grey;
 
   &:hover {
-    @apply text-trusted-blue cursor-pointer transition ease-in-out delay-75;
+    @apply text-charcoal bg-rainy-grey cursor-pointer transition-all ease-in-out duration-300;
   }
 }
 

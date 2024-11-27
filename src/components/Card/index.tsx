@@ -23,6 +23,8 @@ export default function Card(props: CardProps) {
         return `bg-gradient-to-bl from-black to-night-charcoal w-full text-white`;
       case THEMES.LIGHT:
         return `bg-white w-full text-charcoal`;
+      default:
+        return '';
     }
   }, []);
 
@@ -32,6 +34,8 @@ export default function Card(props: CardProps) {
         return `bg-gradient-to-t from-black from-30% to-night-charcoal via-1% text-white`;
       case THEMES.LIGHT:
         return `border-0 border-t-2 border-solid border-shiny-grey bg-white w-full text-charcoal`;
+      default:
+        return '';
     }
   }, []);
 

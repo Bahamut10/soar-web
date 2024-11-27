@@ -28,6 +28,8 @@ export default function Button(props: ButtonProps) {
         return 'px-12 py-5 text-body rounded-[20px]';
       case BUTTON_SIZES.LG:
         return 'px-12 py-5 text-h5 rounded-[20px]';
+      default:
+        return '';
     }
   }, [size]);
 
@@ -45,6 +47,8 @@ export default function Button(props: ButtonProps) {
           _class,
           'bg-white text-charcoal hover:bg-charcoal hover:text-white'
         );
+        break;
+      default:
         break;
     }
 

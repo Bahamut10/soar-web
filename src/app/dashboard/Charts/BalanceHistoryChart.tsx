@@ -39,7 +39,7 @@ export default function BalanceHistoryChart() {
           <Line
             type="monotone"
             dataKey="balance"
-            stroke="#1814f3"
+            stroke={_theme.colors['trusted-blue']}
             strokeWidth={4}
             activeDot={{
               r: 8,

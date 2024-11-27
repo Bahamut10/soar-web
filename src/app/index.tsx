@@ -6,9 +6,13 @@ import RootContextProvider, { useRootContext } from './Context';
 import Navbar from '@/components/Navbar';
 import { ReactNode } from 'react';
 import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 
 function Content({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
   const { isNavbarOpen } = useRootContext();
+
+  const cloudyBgOnMobile = ['/setting'];
 
   return (
     <div className="flex">
@@ -17,7 +21,14 @@ function Content({ children }: { children: ReactNode }) {
         className={clsx('flex-1', isNavbarOpen ? 'h-svh overflow-hidden' : '')}
       >
         <Navbar />
-        <div className="laptop:bg-cloudy-grey">{children}</div>
+        <div
+          className={clsx(
+            'laptop:bg-cloudy-grey',
+            cloudyBgOnMobile.includes(pathname) ? 'bg-cloudy-grey' : 'bg-white'
+          )}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
