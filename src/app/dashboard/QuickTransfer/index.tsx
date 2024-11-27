@@ -6,8 +6,9 @@ import { TEXT_VARIANTS } from '@/components/Text/enum';
 import Image from 'next/image';
 import { useCallback, useMemo, useState } from 'react';
 import { MdChevronLeft, MdChevronRight, MdSend } from 'react-icons/md';
-import useBreakpoint, { DEVICES } from '../../../../breakpoints';
+import useBreakpoint, { breakpoints, DEVICES } from '../../../../breakpoints';
 import { dataPerson, DataPerson } from './data';
+import useSliding from './useSliding';
 
 type UserProfileProps = {
   className?: string;
@@ -25,7 +26,7 @@ function UserProfile(props: UserProfileProps) {
         alt="User Profile Picture"
         width={100}
         height={100}
-        className="max-[517px]:w-[80px] max-[517px]:h-[80px] max-w-[unset]"
+        className=" max-w-[unset]"
       />
       <div className="mt-3 flex flex-col gap-1">
         <Text
@@ -46,33 +47,17 @@ function UserProfile(props: UserProfileProps) {
 }
 
 export default function QuickTransfer() {
-  const breakpoint = useBreakpoint();
-
-  const [moveLeft, setMoveLeft] = useState(0);
-
-  const profileWidth = useMemo(() => {
-    if (breakpoint > DEVICES.TABLET) return 120;
-    return 80;
-  }, [breakpoint]);
-
-  const profileWidthToSkip = useMemo(() => {
-    if (breakpoint > DEVICES.TABLET) return 140;
-    return 120;
-  }, [breakpoint]);
-
-  const handleSlideLeft = useCallback(() => {
-    if (moveLeft < (dataPerson.length - 3) * profileWidth)
-      setMoveLeft((prev) => prev + profileWidthToSkip);
-  }, [moveLeft, profileWidth, profileWidthToSkip]);
-
-  const handleSlideRight = useCallback(() => {
-    setMoveLeft(0);
-  }, []);
+  const {
+    handleSlideLeft,
+    handleSlideRight,
+    sumOfTotalProfileToSkip,
+    moveLeft,
+  } = useSliding();
 
   return (
     <div className="tile !p-8">
-      <div className="flex gap-8 items-center">
-        <div className="max-[517px]:w-[320px] flex gap-10 w-[400px] overflow-hidden">
+      <div className="max-[344px]:flex-col flex gap-8 items-center">
+        <div className="max-[550px]:w-[230px] max-[550px]:gap-8 laptop:max-desktop:w-[240px] flex gap-10 w-[400px] mx-auto overflow-hidden">
           {dataPerson.map((person) => (
             <UserProfile
               key={person.photo}
@@ -82,7 +67,7 @@ export default function QuickTransfer() {
             />
           ))}
         </div>
-        {moveLeft < 240 ? (
+        {moveLeft <= sumOfTotalProfileToSkip ? (
           <span
             className="bg-white rounded-full shadow-lg flex items-center justify-center h-fit p-3 cursor-pointer transition ease-in-out delay-75 hover:shadow-md hover:transition hover:ease-in-out hover:delay-75"
             onClick={handleSlideLeft}
@@ -98,7 +83,7 @@ export default function QuickTransfer() {
           </span>
         )}
       </div>
-      <div className="flex justify-between items-center mt-7">
+      <div className="max-[344px]:flex-col flex justify-between items-center mt-7">
         <Text variant={TEXT_VARIANTS.BODY} className="text-night-charcoal">
           Write Amount
         </Text>

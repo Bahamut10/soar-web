@@ -3,6 +3,7 @@ import clsx from 'clsx';
 type InputProps = {
   className?: string;
   defaultValue?: string | number;
+  label?: string;
   onChange?: () => void;
   placeholder?: string;
   type: string;
@@ -15,6 +16,7 @@ export default function Input(props: InputProps) {
   const {
     className,
     defaultValue,
+    label,
     onChange,
     placeholder,
     type,
@@ -26,6 +28,9 @@ export default function Input(props: InputProps) {
   return (
     <div className="relative">
       {leftIcon ? leftIcon : <></>}
+      {label && (
+        <label className="block text-body text-charcoal mb-3">{label}</label>
+      )}
       <input
         type={type}
         placeholder={placeholder}
@@ -33,7 +38,7 @@ export default function Input(props: InputProps) {
         value={value}
         defaultValue={defaultValue}
         className={clsx(
-          'p-3 text-gloomy-blue text-sm border border-cloudy-grey rounded-lg focus:outline-none focus:ring-0',
+          'p-3 text-gloomy-blue text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0',
           className
         )}
       />

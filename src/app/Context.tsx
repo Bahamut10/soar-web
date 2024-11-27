@@ -3,17 +3,20 @@ import React, {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useCallback,
   useState,
 } from 'react';
 
 interface RootContextTypes {
   isNavbarOpen: boolean;
   setIsNavbarOpen: Dispatch<SetStateAction<boolean>>;
+  toggleNavbar: () => void;
 }
 
 export const RootContext = createContext<RootContextTypes>({
   isNavbarOpen: false,
   setIsNavbarOpen: () => {},
+  toggleNavbar: () => {},
 });
 
 export default function RootContextProvider({
@@ -23,12 +26,17 @@ export default function RootContextProvider({
 }) {
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
+  const toggleNavbar = useCallback(() => {
+    setIsNavbarOpen(!isNavbarOpen);
+  }, [isNavbarOpen]);
+
   const _value = React.useMemo(() => {
     return {
       isNavbarOpen,
       setIsNavbarOpen,
+      toggleNavbar,
     };
-  }, [isNavbarOpen]);
+  }, [isNavbarOpen, toggleNavbar]);
 
   return <RootContext.Provider value={_value}>{children}</RootContext.Provider>;
 }

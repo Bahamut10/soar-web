@@ -1,6 +1,9 @@
 import { createBreakpoint } from 'react-use';
 import { screens } from './tailwind.screens';
 
+const parsePixelValue = (value: string) =>
+  Number.parseInt(value.replace('px', ''), 10);
+
 export const DEVICES = {
   PHONE: 'phone',
   TABLET: 'tablet',
@@ -10,9 +13,9 @@ export const DEVICES = {
 
 export const breakpoints = {
   [DEVICES.PHONE]: 0,
-  [DEVICES.TABLET]: Number.parseInt(screens.tablet),
-  [DEVICES.LAPTOP]: Number.parseInt(screens.laptop),
-  [DEVICES.DESKTOP]: Number.parseInt(screens.desktop),
+  [DEVICES.TABLET]: parsePixelValue(screens.tablet),
+  [DEVICES.LAPTOP]: parsePixelValue(screens.laptop),
+  [DEVICES.DESKTOP]: parsePixelValue(screens.desktop),
 };
 
 const useBreakpoint = createBreakpoint(
