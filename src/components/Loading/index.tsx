@@ -1,9 +1,18 @@
+import clsx from 'clsx';
 import { SyncLoader } from 'react-spinners';
 
-export default function Loading() {
+type LoadingProps = {
+  size?: number;
+};
+
+export default function Loading(props: LoadingProps) {
+  const { size } = props;
+
   return (
-    <div className="flex items-center justify-center h-40">
-      <SyncLoader />
+    <div
+      className={clsx(`flex items-center justify-center`, size ? `` : 'h-40')}
+    >
+      <SyncLoader size={size} />
     </div>
   );
 }

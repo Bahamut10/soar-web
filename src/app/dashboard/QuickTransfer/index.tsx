@@ -9,7 +9,9 @@ import { MdChevronLeft, MdChevronRight, MdSend } from 'react-icons/md';
 import useSliding from './useSliding';
 import Loading from '@/components/Loading';
 import clsx from 'clsx';
-import { useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
+import { useAPIPostQuickTransfer } from '@/networks/dashboard/useAPIDashboard';
+import { toast } from 'react-toastify';
 
 type UserProfileProps = {
   className?: string;
@@ -74,10 +76,46 @@ export default function QuickTransfer({
   } = useSliding({ data });
 
   const [selectedContact, setSelectedContact] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  const { mutateAsync, isPending } = useAPIPostQuickTransfer();
 
   const onSelect = useCallback((val: number) => {
     setSelectedContact(val);
   }, []);
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setAmount(Number(e.target.value));
+  }, []);
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (selectedContact <= 0) {
+        toast.error('Please select a contact to do a quick transfer!');
+      } else {
+        await mutateAsync(
+          {
+            userId: selectedContact,
+            amount,
+          },
+          {
+            onSuccess: ({ data }) => {
+              toast.success(
+                `Transferred $${amount} Successfully to ${data.name}!`
+              );
+              setAmount(0);
+            },
+            onError: () => {
+              toast.error('Something went wrong, please try again later!');
+            },
+          }
+        );
+      }
+    },
+    [amount, mutateAsync, selectedContact]
+  );
 
   return (
     <div className="tile !p-8">
@@ -118,21 +156,32 @@ export default function QuickTransfer({
             <Text variant={TEXT_VARIANTS.BODY} className="text-night-charcoal">
               Write Amount
             </Text>
-            <div className="relative">
-              <Input
-                type="number"
-                placeholder="Amount"
-                className="pr-32 pl-6 bg-cloudy-grey max-w-72 !rounded-full"
-                defaultValue={''}
-                // onChange={handleChange}
-              />
-              <Button
-                variant={BUTTON_VARIANTS.PRIMARY}
-                className="rounded-full px-6 h-[50px] absolute flex items-center gap-1 top-0 right-0"
-              >
-                Send <MdSend />
-              </Button>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="relative">
+                <Input
+                  type="number"
+                  placeholder="Amount"
+                  className="pr-32 pl-6 bg-cloudy-grey max-w-72 !rounded-full"
+                  defaultValue={''}
+                  onChange={handleChange}
+                  required
+                />
+                <Button
+                  type="submit"
+                  variant={BUTTON_VARIANTS.PRIMARY}
+                  disabled={isPending}
+                  className="rounded-full px-6 h-[50px] absolute flex items-center gap-1 top-0 right-0"
+                >
+                  {isPending ? (
+                    <Loading size={8} />
+                  ) : (
+                    <>
+                      Send <MdSend />
+                    </>
+                  )}
+                </Button>
+              </div>
+            </form>
           </div>
         </>
       )}
