@@ -9,6 +9,8 @@ import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/utils/query-client';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Content({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -41,6 +43,7 @@ export default function Wrapper({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <RootContextProvider>
         <Content>{children}</Content>
+        <ToastContainer position="top-center" theme="colored" />
       </RootContextProvider>
     </QueryClientProvider>
   );

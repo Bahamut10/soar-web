@@ -3,17 +3,15 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from './enum';
 import clsx from 'clsx';
 
 type ButtonProps = {
-  as?: keyof JSX.IntrinsicElements;
   children: React.ReactNode;
   className?: string;
   size?: keyof typeof BUTTON_SIZES;
   variant: keyof typeof BUTTON_VARIANTS;
-};
+  disabled?: boolean;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button(props: ButtonProps) {
-  const { as, children, className, size, variant, ...restProps } = props;
-
-  const Element = as ?? 'button';
+  const { children, className, disabled, size, variant, ...restProps } = props;
 
   const _size = useMemo(() => {
     switch (size) {
@@ -30,6 +28,13 @@ export default function Button(props: ButtonProps) {
 
   const _className = useMemo(() => {
     let _class = 'font-bold border-2 border-charcoal';
+    if (disabled) {
+      _class = clsx(
+        _class,
+        'bg-cloudy-grey cursor-not-allowed border-rainy-grey '
+      );
+      return clsx(_size, _class, className);
+    }
     switch (variant) {
       case BUTTON_VARIANTS.PRIMARY:
         _class = clsx(
@@ -48,11 +53,11 @@ export default function Button(props: ButtonProps) {
     }
 
     return clsx(_size, _class, className);
-  }, [_size, className, variant]);
+  }, [_size, className, disabled, variant]);
 
   return (
-    <Element className={_className} {...restProps}>
+    <button className={_className} {...restProps}>
       {children}
-    </Element>
+    </button>
   );
 }
