@@ -1,7 +1,6 @@
 import { useRootContext } from '@/app/Context';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
-import { ReactNode, useCallback, useState } from 'react';
 import {
   MdAccountCircle,
   MdAreaChart,
@@ -71,17 +70,12 @@ const menuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+
   const { isNavbarOpen, toggleNavbar } = useRootContext();
 
-  const [active, setActive] = useState(pathname);
-
-  const handlePickMenu = useCallback(
-    (item: { title: string; href: string; icon: ReactNode }) => {
-      setActive(item.href.toLowerCase());
-      toggleNavbar();
-    },
-    [toggleNavbar]
-  );
+  const handlePickMenu = () => {
+    toggleNavbar();
+  };
 
   return (
     <div
@@ -103,10 +97,10 @@ export default function Sidebar() {
         {menuItems.map((item) => (
           <MenuItem
             key={item.title}
-            active={active === item.href.toLowerCase()}
+            active={pathname === item.href.toLowerCase()}
             href={item.href}
             icon={item.icon}
-            onClick={() => handlePickMenu(item)}
+            onClick={() => handlePickMenu()}
             title={item.title}
           />
         ))}

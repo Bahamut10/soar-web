@@ -11,7 +11,14 @@ type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button(props: ButtonProps) {
-  const { children, className, disabled, size, variant, ...restProps } = props;
+  const {
+    children,
+    className,
+    disabled,
+    size = BUTTON_SIZES.MD,
+    variant,
+    ...restProps
+  } = props;
 
   const _size = useMemo(() => {
     switch (size) {
@@ -31,7 +38,7 @@ export default function Button(props: ButtonProps) {
     if (disabled) {
       _class = clsx(
         _class,
-        'bg-cloudy-grey cursor-not-allowed border-rainy-grey '
+        'text-rainy-grey bg-cloudy-grey cursor-not-allowed border-rainy-grey'
       );
       return clsx(_size, _class, className);
     }
@@ -55,8 +62,16 @@ export default function Button(props: ButtonProps) {
     return clsx(_size, _class, className);
   }, [_size, className, disabled, variant]);
 
+  const _onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    restProps.onClick?.(e);
+  };
+
   return (
-    <button className={_className} {...restProps}>
+    <button {...restProps} className={_className} onClick={_onClick}>
       {children}
     </button>
   );

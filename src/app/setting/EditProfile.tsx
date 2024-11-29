@@ -1,78 +1,128 @@
 import Button from '@/components/Button';
 import { BUTTON_SIZES, BUTTON_VARIANTS } from '@/components/Button/enum';
-import Input from '@/components/Input';
+import { Input } from '@/components/Input';
 import Image from 'next/image';
-import { useState } from 'react';
 
 import DatePicker from 'react-datepicker';
 
+import Loading from '@/components/Loading';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Controller } from 'react-hook-form';
+import { MdEdit } from 'react-icons/md';
+import useEditProfile from './useEditProfile';
 
 export default function EditProfile() {
-  const [startDate, setStartDate] = useState(new Date());
+  const {
+    isProfileLoading,
+    profileForm,
+    onSubmit,
+    handleBrowsePhoto,
+    handlePhotoChange,
+    browseFileRef,
+    postEditProfile,
+    previewPhoto,
+    profile,
+  } = useEditProfile();
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isDirty, isValid },
+  } = profileForm;
+  const { isPending } = postEditProfile;
+
+  if (isProfileLoading) return <Loading />;
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="max-laptop:flex-col max-laptop:items-center max-laptop:gap-6 flex gap-16">
-        <div>
+        <div
+          className="relative h-fit cursor-pointer"
+          onClick={handleBrowsePhoto}
+        >
           <Image
-            src="/user-1.png"
+            src={
+              previewPhoto || profile?.photo?.toString() || '/user-circle.svg'
+            }
+            priority={true}
             alt="User Profile Picture"
             width={100}
             height={100}
           />
+          <span className="bg-charcoal p-2 rounded-full absolute -bottom-1 -right-1">
+            <MdEdit className="text-white" />
+          </span>
+          <Input
+            {...register('photo')}
+            ref={browseFileRef}
+            type="file"
+            onChange={handlePhotoChange}
+            accept="image/*"
+            hidden
+          />
         </div>
         <div className="max-laptop:flex-col flex-2 flex justify-between w-full gap-7">
           <div className="flex flex-col gap-6 flex-1">
-            <Input label="Your Name" type="text" defaultValue="Charlene Reed" />
-            <Input
-              label="Email"
-              type="email"
-              defaultValue="charlenereed@gmail.com"
-            />
+            <Input {...register('name')} label="Your Name" type="text" />
+            <Input {...register('email')} label="Email" type="email" />
             <div className="flex flex-col">
               <label className="mb-3">Date of Birth</label>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => {
-                  if (date) setStartDate(date);
-                }}
-                className="p-3 text-gloomy-blue text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0"
+              <Controller
+                name="dateOfBirth"
+                control={control}
+                render={({ field: { onChange, value, ref } }) => (
+                  <DatePicker
+                    selected={value}
+                    onChange={onChange}
+                    dateFormat="dd MMMM yyyy"
+                    placeholderText="Select a date"
+                    ref={ref}
+                    className="p-3 text-stormy-grey text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0"
+                  />
+                )}
               />
             </div>
             <Input
+              {...register('permanentAddress')}
               label="Permanent Address"
               type="text"
-              defaultValue="San Jose, California, USA"
             />
-            <Input label="Postal Code" type="text" defaultValue="45962" />
+            <Input
+              {...register('postalCode')}
+              label="Postal Code"
+              type="text"
+            />
           </div>
           <div className="flex flex-col gap-6 flex-1">
-            <Input label="User Name" type="text" defaultValue="Charlene Reed" />
+            <Input {...register('username')} label="User Name" type="text" />
             <Input
+              {...register('password')}
               label="Password"
               type="password"
-              defaultValue="Charlene Reed"
+              error={errors.password && errors.password.message}
             />
             <Input
+              {...register('presentAddress')}
               label="Present Address"
               type="text"
-              defaultValue="San Jose, California, USA"
             />
-            <Input label="City" type="text" defaultValue="San Jose" />
-            <Input label="Country" type="text" defaultValue="USA" />
+            <Input {...register('city')} label="City" type="text" />
+            <Input {...register('country')} label="Country" type="text" />
           </div>
         </div>
       </div>
       <div className="flex justify-end mt-8">
         <Button
+          type="submit"
           variant={BUTTON_VARIANTS.PRIMARY}
           size={BUTTON_SIZES.SM}
           className="max-laptop:w-full"
+          disabled={!isDirty || isPending || !isValid}
         >
-          Save
+          {isPending ? <Loading size={8} /> : 'Save'}
         </Button>
       </div>
-    </>
+    </form>
   );
 }

@@ -11,7 +11,7 @@ export const useAPIGetDashboardData = (args = {}) => {
 
 export const useAPIPostQuickTransfer = (args = {}) => {
   return useMutation({
-    mutationFn: async (body: { userId: number; amount: number }) =>
+    mutationFn: async (body: { userId: number; amount: number | string }) =>
       await Dashboard.postQuickTransfer(body),
     ...args,
   });

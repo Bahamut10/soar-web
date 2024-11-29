@@ -1,26 +1,29 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useRootContext } from '@/app/Context';
+import { useAPIGetProfile } from '@/networks/profile/useAPIProfile';
+import { ProfileStruct } from '@/types/profile';
+import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useMemo } from 'react';
 import {
   MdNotifications,
   MdOutlineMiscellaneousServices,
   MdSearch,
 } from 'react-icons/md';
 import Input from '../Input';
+import { ROUTES } from '../Sidebar/enums';
 import Text from '../Text';
 import { TEXT_VARIANTS } from '../Text/enum';
-import Image from 'next/image';
-import clsx from 'clsx';
-import { useRootContext } from '@/app/Context';
-import { usePathname } from 'next/navigation';
-import { ROUTES } from '../Sidebar/enums';
 
 function MobileNav() {
   const { isNavbarOpen, toggleNavbar } = useRootContext();
 
-  const handleStripsClick = useCallback(() => {
+  const handleStripsClick = () => {
     toggleNavbar();
-  }, [toggleNavbar]);
+  };
 
   return (
     <div className="laptop:hidden flex items-center">
@@ -45,6 +48,9 @@ function MobileNav() {
 export default function Navbar() {
   const pathname = usePathname();
 
+  const { data: profileData } = useAPIGetProfile();
+  const profile: ProfileStruct = profileData?.data;
+
   const navbarTitle = useMemo(() => {
     switch (pathname) {
       case ROUTES.DASHBOARD:
@@ -56,7 +62,7 @@ export default function Navbar() {
     }
   }, [pathname]);
 
-  const _renderInput = useCallback((_className?: string) => {
+  const _renderInput = (_className?: string) => {
     return (
       <Input
         type="text"
@@ -72,7 +78,7 @@ export default function Navbar() {
         // onChange={handleChange}
       />
     );
-  }, []);
+  };
 
   return (
     <div className="laptop:border-b-2 laptop:border-solid laptop:border-shiny-grey p-5 border-0 bg-white">
@@ -87,7 +93,9 @@ export default function Navbar() {
         <div className="flex gap-4 items-center">
           {_renderInput('max-laptop:hidden')}
           <div className="max-laptop:hidden button__icon">
-            <MdOutlineMiscellaneousServices className="z-10" size={30} />
+            <Link href="/setting">
+              <MdOutlineMiscellaneousServices className="z-10" size={30} />
+            </Link>
           </div>
           <div className="max-laptop:hidden group button__icon">
             <MdNotifications
@@ -97,8 +105,9 @@ export default function Navbar() {
           </div>
           <div className="button__icon">
             <Image
-              src="/user-0.png"
+              src={profile?.photo?.toString() ?? '/user-circle.svg'}
               alt="User Profile Picture"
+              priority={true}
               width={50}
               height={50}
             />

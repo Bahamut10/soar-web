@@ -1,4 +1,4 @@
-import { contacts } from '@/app/databases/contacts';
+import { contacts } from '@/app/api/databases/contacts';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(

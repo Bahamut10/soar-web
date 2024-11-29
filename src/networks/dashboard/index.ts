@@ -5,7 +5,10 @@ class Dashboard {
     return fetch.get('/dashboard');
   }
 
-  static postQuickTransfer(params: { userId: number; amount: number }) {
+  static postQuickTransfer(params: {
+    userId: number;
+    amount: number | string;
+  }) {
     const { userId, amount } = params;
 
     return fetch.post(`/quick-transfer/${userId}`, {

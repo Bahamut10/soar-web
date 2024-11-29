@@ -1,17 +1,17 @@
 import Button from '@/components/Button';
 import { BUTTON_VARIANTS } from '@/components/Button/enum';
 import Input from '@/components/Input';
+import Loading from '@/components/Loading';
 import Text from '@/components/Text';
 import { TEXT_VARIANTS } from '@/components/Text/enum';
-import { Contacts } from '@/types/dashboard';
-import Image from 'next/image';
-import { MdChevronLeft, MdChevronRight, MdSend } from 'react-icons/md';
-import useSliding from './useSliding';
-import Loading from '@/components/Loading';
-import clsx from 'clsx';
-import { ChangeEvent, useCallback, useState } from 'react';
 import { useAPIPostQuickTransfer } from '@/networks/dashboard/useAPIDashboard';
+import { Contacts } from '@/types/dashboard';
+import clsx from 'clsx';
+import Image from 'next/image';
+import { ChangeEvent, useState } from 'react';
+import { MdChevronLeft, MdChevronRight, MdSend } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import useSliding from './useSliding';
 
 type UserProfileProps = {
   className?: string;
@@ -35,7 +35,12 @@ function UserProfile(props: UserProfileProps) {
         alt="User Profile Picture"
         width={100}
         height={100}
-        className="max-w-[unset]"
+        className={clsx(
+          'max-w-[unset]',
+          isSelected
+            ? 'border-4 border-solid border-trusted-blue rounded-full'
+            : ''
+        )}
       />
       <div className="mt-3 flex flex-col gap-1">
         <Text
@@ -76,46 +81,43 @@ export default function QuickTransfer({
   } = useSliding({ data });
 
   const [selectedContact, setSelectedContact] = useState(0);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number | string>('');
 
-  const { mutateAsync, isPending } = useAPIPostQuickTransfer();
+  const { mutateAsync: quickTransfer, isPending } = useAPIPostQuickTransfer();
 
-  const onSelect = useCallback((val: number) => {
+  const onSelect = (val: number) => {
     setSelectedContact(val);
-  }, []);
+  };
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(e.target.value));
-  }, []);
+  };
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      if (selectedContact <= 0) {
-        toast.error('Please select a contact to do a quick transfer!');
-      } else {
-        await mutateAsync(
-          {
-            userId: selectedContact,
-            amount,
+    if (selectedContact <= 0) {
+      toast.error('Please select a contact to do a quick transfer!');
+    } else {
+      await quickTransfer(
+        {
+          userId: selectedContact,
+          amount,
+        },
+        {
+          onSuccess: ({ data }) => {
+            toast.success(
+              `Transferred $${amount} Successfully to ${data.name}!`
+            );
+            setAmount('');
           },
-          {
-            onSuccess: ({ data }) => {
-              toast.success(
-                `Transferred $${amount} Successfully to ${data.name}!`
-              );
-              setAmount(0);
-            },
-            onError: () => {
-              toast.error('Something went wrong, please try again later!');
-            },
-          }
-        );
-      }
-    },
-    [amount, mutateAsync, selectedContact]
-  );
+          onError: () => {
+            toast.error('Something went wrong, please try again later!');
+          },
+        }
+      );
+    }
+  };
 
   return (
     <div className="tile !p-8">
@@ -162,7 +164,7 @@ export default function QuickTransfer({
                   type="number"
                   placeholder="Amount"
                   className="pr-32 pl-6 bg-cloudy-grey max-w-72 !rounded-full"
-                  defaultValue={''}
+                  value={amount}
                   onChange={handleChange}
                   required
                 />

@@ -1,9 +1,9 @@
-import { activities } from '@/app/databases/activities';
-import { balances } from '@/app/databases/balances';
-import { cards } from '@/app/databases/cards';
-import { contacts } from '@/app/databases/contacts';
-import { expenses } from '@/app/databases/expenses';
-import { transactions } from '@/app/databases/transactions';
+import { activities } from '@/app/api/databases/activities';
+import { balances } from '@/app/api/databases/balances';
+import { cards } from '@/app/api/databases/cards';
+import { contacts } from '@/app/api/databases/contacts';
+import { expenses } from '@/app/api/databases/expenses';
+import { transactions } from '@/app/api/databases/transactions';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
