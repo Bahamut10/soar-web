@@ -2,7 +2,6 @@ import Text from '@/components/Text';
 import { TEXT_VARIANTS } from '@/components/Text/enum';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { Url } from 'url';
 
 type GridBoxProps = {
   children: React.ReactNode;
