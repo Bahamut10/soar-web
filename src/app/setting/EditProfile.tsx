@@ -35,11 +35,17 @@ export default function EditProfile() {
   if (isProfileLoading) return <Loading />;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="max-laptop:flex-col max-laptop:items-center max-laptop:gap-6 flex gap-16">
+    <form onSubmit={handleSubmit(onSubmit)} aria-label="Profile Form">
+      <div
+        className="max-laptop:flex-col max-laptop:items-center max-laptop:gap-6 flex gap-16"
+        role="group"
+        aria-labelledby="profile-photo-label"
+      >
         <div
           className="relative h-fit cursor-pointer"
           onClick={handleBrowsePhoto}
+          role="button"
+          aria-label="Upload Profile Picture"
         >
           <Image
             src={
@@ -50,7 +56,11 @@ export default function EditProfile() {
             width={100}
             height={100}
           />
-          <span className="bg-charcoal p-2 rounded-full absolute -bottom-1 -right-1">
+          <span
+            className="bg-charcoal p-2 rounded-full absolute -bottom-1 -right-1"
+            role="img"
+            aria-label="Edit Profile Picture Icon"
+          >
             <MdEdit className="text-white" />
           </span>
           <Input
@@ -64,8 +74,18 @@ export default function EditProfile() {
         </div>
         <div className="max-laptop:flex-col flex-2 flex justify-between w-full gap-7">
           <div className="flex flex-col gap-6 flex-1">
-            <Input {...register('name')} label="Your Name" type="text" />
-            <Input {...register('email')} label="Email" type="email" />
+            <Input
+              {...register('name')}
+              label="Your Name"
+              type="text"
+              aria-required="true"
+            />
+            <Input
+              {...register('email')}
+              label="Email"
+              type="email"
+              aria-required="true"
+            />
             <div className="flex flex-col">
               <label className="mb-3">Date of Birth</label>
               <Controller
@@ -79,6 +99,7 @@ export default function EditProfile() {
                     placeholderText="Select a date"
                     ref={ref}
                     className="p-3 text-stormy-grey text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0"
+                    aria-required="true"
                   />
                 )}
               />
@@ -87,28 +108,47 @@ export default function EditProfile() {
               {...register('permanentAddress')}
               label="Permanent Address"
               type="text"
+              aria-required="true"
             />
             <Input
               {...register('postalCode')}
               label="Postal Code"
               type="text"
+              aria-required="true"
             />
           </div>
           <div className="flex flex-col gap-6 flex-1">
-            <Input {...register('username')} label="User Name" type="text" />
+            <Input
+              {...register('username')}
+              label="User Name"
+              type="text"
+              aria-required="true"
+            />
             <Input
               {...register('password')}
               label="Password"
               type="password"
               error={errors.password && errors.password.message}
+              aria-invalid={errors.password ? 'true' : 'false'}
             />
             <Input
               {...register('presentAddress')}
               label="Present Address"
               type="text"
+              aria-required="true"
             />
-            <Input {...register('city')} label="City" type="text" />
-            <Input {...register('country')} label="Country" type="text" />
+            <Input
+              {...register('city')}
+              label="City"
+              type="text"
+              aria-required="true"
+            />
+            <Input
+              {...register('country')}
+              label="Country"
+              type="text"
+              aria-required="true"
+            />
           </div>
         </div>
       </div>
@@ -119,6 +159,7 @@ export default function EditProfile() {
           size={BUTTON_SIZES.SM}
           className="max-laptop:w-full"
           disabled={!isDirty || isPending || !isValid}
+          aria-disabled={!isDirty || isPending || !isValid}
         >
           {isPending ? <Loading size={8} /> : 'Save'}
         </Button>

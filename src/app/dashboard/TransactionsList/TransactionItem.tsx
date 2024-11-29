@@ -48,10 +48,18 @@ export default function TransactionItem(props: TransactionItemProps) {
   }, [source, subject]);
 
   return (
-    <div className="flex items-center gap-5">
+    <div
+      className="flex items-center gap-5"
+      role="listitem"
+      aria-labelledby={`transaction-${_title}`}
+    >
       <Image src={_icon} alt="Card Transaction" width={55} height={55} />
       <div className="flex-[2]">
-        <Text variant={TEXT_VARIANTS.BODY} className="text-charcoal">
+        <Text
+          variant={TEXT_VARIANTS.BODY}
+          className="text-charcoal"
+          id={`transaction-${_title}`}
+        >
           {_title}
         </Text>
         <Text variant={TEXT_VARIANTS.BODY} className="text-night-charcoal">

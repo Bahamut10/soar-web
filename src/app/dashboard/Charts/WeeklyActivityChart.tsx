@@ -22,20 +22,29 @@ export default function WeeklyActivityChart({
   const { theme: _theme } = theme;
 
   return (
-    <div className="tile">
+    <div
+      className="tile"
+      role="region"
+      aria-labelledby="weekly-activity-title"
+      tabIndex={-1}
+    >
       {isLoading ? (
         <Loading />
       ) : (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={data}
+            aria-label="Bar chart showing weekly deposits and withdrawals"
             margin={{ top: 50, right: 0, left: -20, bottom: -20 }}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="day" />
             <YAxis />
             <Tooltip />
-            <Legend wrapperStyle={{ top: 0, right: 0, width: 'fit-content' }} />
+            <Legend
+              wrapperStyle={{ top: 0, right: 0, width: 'fit-content' }}
+              aria-label="Legend: Blue represents deposits, and black represents withdrawals"
+            />
             <Bar
               dataKey="deposit"
               fill={_theme.colors['trusted-blue']}

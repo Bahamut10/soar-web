@@ -10,19 +10,43 @@ export default function SettingPage() {
       <div className="tile bg-white">
         <Tab activeTab={TABS.EDIT_PROFILE}>
           <Tab.TabHeader>
-            <Tab.List value={TABS.EDIT_PROFILE} />
-            <Tab.List value={TABS.PREFERENCES} />
-            <Tab.List value={TABS.SECURITY} />
+            <Tab.List
+              id="edit-profile-tab"
+              value={TABS.EDIT_PROFILE}
+              ariaControls="edit-profile-panel"
+            />
+            <Tab.List
+              id="preferences-tab"
+              value={TABS.PREFERENCES}
+              ariaControls="preferences-panel"
+            />
+            <Tab.List
+              id="security-tab"
+              value={TABS.SECURITY}
+              ariaControls="security-panel"
+            />
           </Tab.TabHeader>
-          <Tab.Body value={TABS.EDIT_PROFILE}>
+          <Tab.Body
+            id="edit-profile-panel"
+            value={TABS.EDIT_PROFILE}
+            ariaLabelledBy="edit-profile-tab"
+          >
             <EditProfile />
           </Tab.Body>
-          <Tab.Body value={TABS.PREFERENCES}>
+          <Tab.Body
+            id="preferences-panel"
+            value={TABS.PREFERENCES}
+            ariaLabelledBy="preferences-tab"
+          >
             <h1 className="text-center">
               Preferences page is under construction
             </h1>
           </Tab.Body>
-          <Tab.Body value={TABS.SECURITY}>
+          <Tab.Body
+            id="security-panel"
+            value={TABS.SECURITY}
+            ariaLabelledBy="security-tab"
+          >
             <h1 className="text-center">Security page is under construction</h1>
           </Tab.Body>
         </Tab>

@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     (user) => user.id.toString() === _token?.id
   )[0];
 
-  // Update the user data here
+  // Update the user data here, this console.log is intended as the simulation to consume the user object
   console.log(user);
 
   // this timeout is only for updating database data simulation only

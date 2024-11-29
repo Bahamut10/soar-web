@@ -54,13 +54,22 @@ export default function Card(props: CardProps) {
   }, [cardOperator, theme]);
 
   return (
-    <div className="border-2 border-solid border-shiny-grey rounded-3xl w-full overflow-hidden flex flex-col">
+    <div
+      className="border-2 border-solid border-shiny-grey rounded-3xl w-full overflow-hidden flex flex-col"
+      role="region"
+      aria-labelledby={`card-balance-${cardNumber}`}
+    >
       <div
         className={clsx('flex flex-col gap-3 p-6 flex-[2]', _themeClassBody)}
       >
         <div className="flex justify-between">
-          <div>
-            <Text variant={TEXT_VARIANTS.CAPTION}>Balance</Text>
+          <div aria-labelledby={`balance-label-${cardNumber}`}>
+            <Text
+              id={`balance-label-${cardNumber}`}
+              variant={TEXT_VARIANTS.CAPTION}
+            >
+              Balance
+            </Text>
             <Text variant={TEXT_VARIANTS.HEADING5}>
               ${formatCurrency(balance)}
             </Text>
@@ -74,14 +83,22 @@ export default function Card(props: CardProps) {
           />
         </div>
         <div className="flex">
-          <div className="flex-1">
-            <Text variant={TEXT_VARIANTS.CAPTION} className="opacity-70">
+          <div className="flex-1" aria-labelledby={`card-holder-${cardNumber}`}>
+            <Text
+              id={`card-holder-${cardNumber}`}
+              variant={TEXT_VARIANTS.CAPTION}
+              className="opacity-70"
+            >
               CARD HOLDER
             </Text>
             <Text variant={TEXT_VARIANTS.BODY}>{holderName}</Text>
           </div>
-          <div className="flex-1">
-            <Text variant={TEXT_VARIANTS.CAPTION} className="opacity-70">
+          <div className="flex-1" aria-labelledby={`valid-thru-${cardNumber}`}>
+            <Text
+              id={`valid-thru-${cardNumber}`}
+              variant={TEXT_VARIANTS.CAPTION}
+              className="opacity-70"
+            >
               VALID THRU
             </Text>
             <Text variant={TEXT_VARIANTS.BODY}>{valid}</Text>
@@ -91,15 +108,20 @@ export default function Card(props: CardProps) {
       <div
         className={clsx('flex justify-between p-6 flex-1', _themeClassFooter)}
       >
-        <Text variant={TEXT_VARIANTS.HEADING5} className="font-semibold">
+        <Text
+          variant={TEXT_VARIANTS.HEADING5}
+          className="font-semibold"
+          aria-label={`Card number ending in ${cardNumber.slice(-4)}`}
+        >
           {maskCardNumber(cardNumber)}
         </Text>
         <Image
           src={`/ic-mastercard-for-${theme?.toLowerCase()}.png`}
-          alt="Card Operator"
+          alt="Mastercard Logo"
           width={44}
           height={35}
-          className="object-contain"
+          priority={true}
+          className="object-contain w-[44px] h-[35px]"
         />
       </div>
     </div>

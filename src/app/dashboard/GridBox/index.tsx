@@ -21,10 +21,11 @@ export default function GridBox(props: GridBoxProps) {
         <Text
           variant={TEXT_VARIANTS.HEADING5}
           className="text-navy-blue font-semibold"
+          id={`${title.replace(/\s+/g, '-').toLowerCase()}-title`}
         >
           {title}
         </Text>
-        <Link href={ctaUrl || '/dashboard'}>
+        <Link href={ctaUrl || '/dashboard'} tabIndex={cta ? 0 : -1}>
           <Text
             variant={TEXT_VARIANTS.SUBHEADING}
             className="text-navy-blue font-semibold transition ease-in-out delay-75 hover:opacity-50 hover:transition hover:ease-in-out hover:delay-75"
