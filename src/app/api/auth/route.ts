@@ -9,7 +9,7 @@ export async function POST() {
     { status: 200 }
   );
 
-  response.cookies.set('cookie', token, {
+  response.cookies.set('soar_token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24, // 1 day

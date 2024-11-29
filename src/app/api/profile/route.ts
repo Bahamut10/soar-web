@@ -19,8 +19,11 @@ export interface ProfileStruct {
 }
 
 export async function GET(request: NextRequest) {
-  const cookies = parse(request.headers.get('cookie') || '');
-  const token = cookies.token;
+  const cookieHeader = request.headers.get('cookie') || '';
+  const cookies = parse(cookieHeader);
+  const token = cookies.soar_token;
+
+  console.log('cookies:', cookies);
 
   if (!token) {
     return NextResponse.json(
