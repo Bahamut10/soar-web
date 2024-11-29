@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  img {
+    width: auto;
+    height: auto;
+  }
+}
+
 body {
   @apply bg-cloudy-grey;
 }
@@ -12,10 +19,9 @@ body {
 
 .button__icon {
   @apply relative flex items-center justify-center text-gloomy-blue w-12 h-12 rounded-full bg-cloudy-grey transition-all ease-in-out duration-300 border border-solid border-rainy-grey;
-
-  &:hover {
-    @apply text-charcoal bg-rainy-grey cursor-pointer transition-all ease-in-out duration-300;
-  }
+}
+.button__icon:hover {
+  @apply text-charcoal bg-rainy-grey cursor-pointer transition-all ease-in-out duration-300;
 }
 
 .tile {
@@ -24,20 +30,16 @@ body {
 
 .nav__strips {
   @apply relative h-[2px] w-6 bg-black transition-all duration-300 left-0 opacity-100 top-0;
-
-  &:nth-child(2) {
-    @apply w-8;
-  }
-
-  &--open {
-    &:nth-child(1) {
-      @apply transition-all w-8 duration-300 rotate-45 top-3;
-    }
-    &:nth-child(2) {
-      @apply transition-all duration-300 left-full opacity-0;
-    }
-    &:nth-child(3) {
-      @apply transition-all w-8 duration-300 -rotate-45 -top-1;
-    }
-  }
+}
+.nav__strips:nth-child(2) {
+  @apply w-8;
+}
+.nav__strips--open:nth-child(1) {
+  @apply transition-all w-8 duration-300 rotate-45 top-3;
+}
+.nav__strips--open:nth-child(2) {
+  @apply transition-all duration-300 left-full opacity-0;
+}
+.nav__strips--open:nth-child(3) {
+  @apply transition-all w-8 duration-300 -rotate-45 -top-1;
 }

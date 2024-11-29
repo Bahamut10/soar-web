@@ -4,17 +4,30 @@ import Sidebar from '@/components/Sidebar';
 
 import RootContextProvider, { useRootContext } from './Context';
 import Navbar from '@/components/Navbar';
-import { ReactNode } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/utils/query-client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAPILogin } from '@/networks/auth/useAPIAuth';
 
 function Content({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { isNavbarOpen } = useRootContext();
+
+  // this method should be called when a user logins, but since there are no login mechanism here and it's just for token simulation purpose only, we call this API here
+  const { mutateAsync: login } = useAPILogin();
+
+  const handleLogin = useCallback(async () => {
+    await login();
+  }, [login]);
+
+  // This is to simulate login event
+  useEffect(() => {
+    handleLogin();
+  }, [handleLogin]);
 
   const cloudyBgOnMobile = ['/setting'];
 

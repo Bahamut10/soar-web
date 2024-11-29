@@ -10,7 +10,10 @@ export default function Loading(props: LoadingProps) {
 
   return (
     <div
-      className={clsx(`flex items-center justify-center`, size ? `` : 'h-40')}
+      className={clsx(
+        `flex w-full items-center justify-center`,
+        size ? `` : 'h-40'
+      )}
     >
       <SyncLoader size={size} />
     </div>

@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
-import useBreakpoint, { breakpoints, DEVICES } from '../../../../breakpoints';
 import { Contacts } from '@/types/dashboard';
+import { useMemo, useState } from 'react';
+import useBreakpoint, { breakpoints, DEVICES } from '../../../../breakpoints';
 
 export default function useSliding({
   data: contacts,
@@ -30,14 +30,14 @@ export default function useSliding({
     return val * profileWidth;
   }, [contacts?.length, showingProfileAmount]);
 
-  const handleSlideLeft = useCallback(() => {
+  const handleSlideLeft = () => {
     if (moveLeft <= sumOfTotalProfileToSkip)
       setMoveLeft((prev) => prev + profileWidthToSkip);
-  }, [moveLeft, profileWidthToSkip, sumOfTotalProfileToSkip]);
+  };
 
-  const handleSlideRight = useCallback(() => {
+  const handleSlideRight = () => {
     setMoveLeft(0);
-  }, []);
+  };
 
   return {
     handleSlideLeft,

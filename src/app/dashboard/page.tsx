@@ -27,12 +27,17 @@ export default function DashboardPage() {
   return (
     <div className="wrapper">
       <div className="max-[1491px]:flex-col flex gap-5">
-        <GridBox title="My Cards" cta="See All" containerClassName="flex-[2]">
+        <GridBox
+          title="My Cards"
+          cta="See All"
+          ctaUrl={'/dashboard/card-list'}
+          containerClassName="flex-[2]"
+        >
           <div className="max-laptop:flex-col flex gap-3">
             {isDashboardLoading ? (
               <Loading />
             ) : (
-              cards?.map((card: Cards, index: number) => {
+              cards?.slice(0, 2).map((card: Cards, index: number) => {
                 return (
                   <Card
                     key={card.id}
