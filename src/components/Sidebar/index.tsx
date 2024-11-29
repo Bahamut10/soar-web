@@ -74,7 +74,7 @@ export default function Sidebar() {
   const { isNavbarOpen, toggleNavbar } = useRootContext();
 
   const handlePickMenu = () => {
-    toggleNavbar();
+    if (isNavbarOpen) toggleNavbar();
   };
 
   return (
@@ -100,7 +100,7 @@ export default function Sidebar() {
             active={pathname === item.href.toLowerCase()}
             href={item.href}
             icon={item.icon}
-            onClick={() => handlePickMenu()}
+            onClick={handlePickMenu}
             title={item.title}
           />
         ))}
