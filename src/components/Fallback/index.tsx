@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 import Button from '../Button';
 import { BUTTON_SIZES, BUTTON_VARIANTS } from '../Button/enum';

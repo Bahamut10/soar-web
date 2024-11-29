@@ -9,31 +9,6 @@ export const TRANSACTION_TYPES = {
   OUTFLOW: 'OUTFLOW',
 } as const;
 
-const DAYS = {
-  SAT: 'Sat',
-  SUN: 'Sun',
-  MON: 'Mon',
-  TUE: 'Tue',
-  WED: 'Wed',
-  THU: 'Thu',
-  FRI: 'Fri',
-};
-
-const MONTHS = {
-  JAN: 'Jan',
-  FEB: 'Feb',
-  MAR: 'Mar',
-  APR: 'Apr',
-  MAY: 'May',
-  JUN: 'Jun',
-  JUL: 'Jul',
-  AUG: 'Aug',
-  SEP: 'Sep',
-  OCT: 'Oct',
-  NOV: 'Nov',
-  DEC: 'Dec',
-};
-
 export interface Cards {
   id: number;
   balance: number;
@@ -53,7 +28,7 @@ export interface RecentTransactions {
 }
 
 export interface WeeklyActivities {
-  day: keyof typeof DAYS;
+  day: 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
   deposit: number;
   withdraw: number;
 }
@@ -71,6 +46,18 @@ export interface Contacts {
 }
 
 export interface BalanceHistory {
-  month: keyof typeof MONTHS;
+  month:
+    | 'Jan'
+    | 'Feb'
+    | 'Mar'
+    | 'Apr'
+    | 'May'
+    | 'Jun'
+    | 'Jul'
+    | 'Aug'
+    | 'Sep'
+    | 'Oct'
+    | 'Nov'
+    | 'Dec';
   balance: number;
 }

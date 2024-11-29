@@ -122,7 +122,7 @@ export default function QuickTransfer({
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLSpanElement>,
-    handleSlide: Function
+    handleSlide: () => void
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
