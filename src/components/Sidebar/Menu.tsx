@@ -15,7 +15,13 @@ type MenuItemProps = {
 
 export function Menu({ children }: { children: ReactNode }) {
   return (
-    <ul className="max-tablet:max-h-[500px] overflow-y-auto">{children}</ul>
+    <ul
+      className="max-tablet:max-h-[500px] overflow-y-auto"
+      role="menubar"
+      aria-label="Main Menu"
+    >
+      {children}
+    </ul>
   );
 }
 
@@ -24,7 +30,12 @@ export function MenuItem(props: MenuItemProps) {
   const { active, href, icon, onClick, title } = props;
 
   return (
-    <li className="mb-8">
+    <li
+      className="mb-8"
+      role="menuitem"
+      aria-label={`${title}-menu-item`}
+      aria-current={active ? 'page' : undefined}
+    >
       <Link
         href={href}
         onClick={onClick}

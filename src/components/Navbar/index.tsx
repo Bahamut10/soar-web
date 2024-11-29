@@ -69,10 +69,12 @@ export default function Navbar() {
         placeholder="Search for something"
         className={clsx('pl-10 bg-cloudy-grey !rounded-full', _className)}
         defaultValue={''}
+        aria-label="Search input"
         leftIcon={
           <MdSearch
             className="absolute left-4 top-1/2 -translate-y-1/2 text-gloomy-blue"
             size={20}
+            aria-hidden="true"
           />
         }
         // onChange={handleChange}
@@ -94,13 +96,18 @@ export default function Navbar() {
           {_renderInput('max-laptop:hidden')}
           <div className="max-laptop:hidden button__icon">
             <Link href="/setting">
-              <MdOutlineMiscellaneousServices className="z-10" size={30} />
+              <MdOutlineMiscellaneousServices
+                className="z-10"
+                size={30}
+                aria-label="Settings"
+              />
             </Link>
           </div>
           <div className="max-laptop:hidden group button__icon">
             <MdNotifications
               className="z-10 text-trusted-blue group-hover:text-charcoal"
               size={30}
+              aria-label="Notifications"
             />
           </div>
           <div className="button__icon">
@@ -110,6 +117,8 @@ export default function Navbar() {
               priority={true}
               width={50}
               height={50}
+              role="img"
+              aria-label="User profile image"
             />
           </div>
         </div>
