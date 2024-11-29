@@ -6,12 +6,14 @@ import RootContextProvider, { useRootContext } from './Context';
 import Navbar from '@/components/Navbar';
 import { ReactNode, useCallback, useEffect } from 'react';
 import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/utils/query-client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAPILogin } from '@/networks/auth/useAPIAuth';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from '@/components/Fallback';
 
 function Content({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -51,13 +53,35 @@ function Content({ children }: { children: ReactNode }) {
   );
 }
 
+function GlobalError(props: { children: React.ReactNode }): JSX.Element {
+  const route = useRouter();
+  const { children } = props;
+
+  return (
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => {
+        route.refresh();
+      }}
+      onError={(error, info) => {
+        console.error('Global Error:', error);
+        console.error('Error Info:', info);
+      }}
+    >
+      {children}
+    </ErrorBoundary>
+  );
+}
+
 export default function Wrapper({ children }: { children: ReactNode }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <RootContextProvider>
-        <Content>{children}</Content>
-        <ToastContainer position="top-center" theme="colored" />
-      </RootContextProvider>
-    </QueryClientProvider>
+    <GlobalError>
+      <QueryClientProvider client={queryClient}>
+        <RootContextProvider>
+          <Content>{children}</Content>
+          <ToastContainer position="top-center" theme="colored" />
+        </RootContextProvider>
+      </QueryClientProvider>
+    </GlobalError>
   );
 }

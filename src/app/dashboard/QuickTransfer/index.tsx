@@ -29,10 +29,11 @@ function UserProfile(props: UserProfileProps) {
       className={_className}
       style={styles}
       onClick={() => onSelect(person.id)}
+      aria-label={`Select ${person.name}'s profile`}
     >
       <Image
         src={person.photo}
-        alt="User Profile Picture"
+        alt={`${person.name} profile picture`}
         width={100}
         height={100}
         className={clsx(
@@ -119,8 +120,22 @@ export default function QuickTransfer({
     }
   };
 
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLSpanElement>,
+    handleSlide: Function
+  ) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleSlide();
+    }
+  };
+
   return (
-    <div className="tile !p-8">
+    <div
+      className="tile !p-8"
+      role="region"
+      aria-labelledby="quick-transfer-title"
+    >
       {isLoading ? (
         <Loading />
       ) : (
@@ -135,20 +150,29 @@ export default function QuickTransfer({
                   styles={{ transform: `translateX(-${moveLeft}px)` }}
                   isSelected={selectedContact === person.id}
                   onSelect={onSelect}
+                  aria-label={`Select ${person.name}'s profile`}
                 />
               ))}
             </div>
             {moveLeft <= sumOfTotalProfileToSkip ? (
               <span
+                role="button"
+                aria-label="Slide to the right"
+                tabIndex={0}
                 className="bg-white rounded-full shadow-lg flex items-center justify-center h-fit p-3 cursor-pointer transition ease-in-out delay-75 hover:shadow-md hover:transition hover:ease-in-out hover:delay-75"
                 onClick={handleSlideLeft}
+                onKeyDown={(e) => handleKeyDown(e, handleSlideLeft)}
               >
                 <MdChevronRight size={30} />
               </span>
             ) : (
               <span
+                role="button"
+                aria-label="Slide to the left"
+                tabIndex={0}
                 className="bg-white rounded-full shadow-lg flex items-center justify-center h-fit p-3 cursor-pointer transition ease-in-out delay-75 hover:shadow-md hover:transition hover:ease-in-out hover:delay-75"
                 onClick={handleSlideRight}
+                onKeyDown={(e) => handleKeyDown(e, handleSlideRight)}
               >
                 <MdChevronLeft size={30} />
               </span>
@@ -166,6 +190,7 @@ export default function QuickTransfer({
                   className="pr-32 pl-6 bg-cloudy-grey max-w-72 !rounded-full"
                   value={amount}
                   onChange={handleChange}
+                  aria-label="Amount to send"
                   required
                 />
                 <Button
@@ -173,6 +198,10 @@ export default function QuickTransfer({
                   variant={BUTTON_VARIANTS.PRIMARY}
                   disabled={isPending}
                   className="rounded-full px-6 h-[50px] absolute flex items-center gap-1 top-0 right-0"
+                  aria-label={
+                    isPending ? 'Sending money, please wait' : 'Send money'
+                  }
+                  aria-disabled={isPending}
                 >
                   {isPending ? (
                     <Loading size={8} />

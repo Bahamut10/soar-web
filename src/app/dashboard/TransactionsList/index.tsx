@@ -10,13 +10,21 @@ export default function TransactionList({
   isLoading: boolean;
 }) {
   return (
-    <ul className="tile max-h-[252px] overflow-auto">
+    <ul
+      className="tile max-h-[252px] overflow-auto"
+      role="region"
+      aria-labelledby="recent-transaction-title"
+    >
       {isLoading ? (
         <Loading />
       ) : (
         data?.map((transaction) => {
           return (
-            <li key={transaction.id} className="mb-3">
+            <li
+              key={transaction.id}
+              className="mb-3"
+              aria-label={`transaction-${transaction.id}`}
+            >
               <TransactionItem
                 amount={transaction.amount}
                 types={transaction.types}

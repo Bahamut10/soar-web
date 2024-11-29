@@ -22,7 +22,12 @@ export default function BalanceHistoryChart({
   const { theme: _theme } = theme;
 
   return (
-    <div className="tile">
+    <div
+      className="tile"
+      role="region"
+      aria-labelledby="balance-history-title"
+      tabIndex={-1}
+    >
       {isLoading ? (
         <Loading />
       ) : (
@@ -30,6 +35,7 @@ export default function BalanceHistoryChart({
           <LineChart
             data={data}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            aria-label="Balance history chart"
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
@@ -43,6 +49,7 @@ export default function BalanceHistoryChart({
               activeDot={{
                 r: 8,
               }}
+              aria-label="Balance over time"
             />
           </LineChart>
         </ResponsiveContainer>
