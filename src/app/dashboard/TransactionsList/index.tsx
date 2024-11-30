@@ -30,7 +30,7 @@ export default function TransactionList({
                 types={transaction.types}
                 date={transaction.created_at}
                 source={transaction.source}
-                subject={transaction.subject}
+                description={transaction.description}
               />
             </li>
           );

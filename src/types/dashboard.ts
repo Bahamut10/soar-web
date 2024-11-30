@@ -24,7 +24,7 @@ export interface RecentTransactions {
   types: keyof typeof TRANSACTION_TYPES;
   created_at: string;
   source: keyof typeof TRANSACTION_SOURCES;
-  subject: string;
+  description: string;
 }
 
 export interface WeeklyActivities {

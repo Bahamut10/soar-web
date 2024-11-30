@@ -8,7 +8,7 @@ import { TRANSACTION_SOURCES, TRANSACTION_TYPES } from '@/types/dashboard';
 import dayjs from 'dayjs';
 
 type TransactionItemProps = {
-  subject: string;
+  description: string;
   amount: number;
   types: keyof typeof TRANSACTION_TYPES;
   date: string;
@@ -16,7 +16,7 @@ type TransactionItemProps = {
 };
 
 export default function TransactionItem(props: TransactionItemProps) {
-  const { amount, types, date, source, subject } = props;
+  const { amount, types, date, source, description } = props;
 
   const _icon = useMemo(() => {
     switch (source) {
@@ -36,31 +36,20 @@ export default function TransactionItem(props: TransactionItemProps) {
     return 'text-leaf-green';
   }, [types]);
 
-  const _title = useMemo(() => {
-    switch (source) {
-      case TRANSACTION_SOURCES.CARD:
-        return 'Deposit from my Card';
-      case TRANSACTION_SOURCES.PAYPAL:
-        return 'Deposit Paypal';
-      default:
-        return subject;
-    }
-  }, [source, subject]);
-
   return (
     <div
       className="flex items-center gap-5"
       role="listitem"
-      aria-labelledby={`transaction-${_title}`}
+      aria-labelledby={`transaction-${description}`}
     >
       <Image src={_icon} alt="Card Transaction" width={55} height={55} />
       <div className="flex-[2]">
         <Text
           variant={TEXT_VARIANTS.BODY}
           className="text-charcoal"
-          id={`transaction-${_title}`}
+          id={`transaction-${description}`}
         >
-          {_title}
+          {description}
         </Text>
         <Text variant={TEXT_VARIANTS.BODY} className="text-night-charcoal">
           {dayjs(date).format('DD MMMM YYYY')}
