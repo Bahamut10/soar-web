@@ -146,7 +146,7 @@ export default function QuickTransfer({
 
   return (
     <div
-      className="tile !p-8"
+      className="tile !p-8 max-tablet:!p-4"
       role="region"
       aria-labelledby="quick-transfer-title"
     >
@@ -154,10 +154,10 @@ export default function QuickTransfer({
         <Loading />
       ) : (
         <>
-          <div className="max-[550px]:flex-col flex gap-5 items-center">
+          <div className="[@media(max-width:380px)]:flex-col laptop:gap-2 flex items-center">
             <div
               className={clsx(
-                `flex gap-8 w-[264px] min-[550px]:max-laptop:w-[369px] desktop:w-[400px] mx-auto overflow-hidden`
+                `flex gap-8 w-[264px] min-[550px]:w-[369px] mx-auto overflow-hidden`
               )}
             >
               {data?.map((person) => (
