@@ -19,7 +19,7 @@ function Content({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { isNavbarOpen } = useRootContext();
 
-  // this method should be called when a user logins, but since there are no login mechanism here and it's just for token simulation purpose only, we call this API here
+  // This method is intended to be called during user login. However, since there's no login mechanism implemented and this is solely for token simulation purposes, we invoke this API here.
   const { mutateAsync: login } = useAPILogin();
 
   const handleLogin = useCallback(async () => {

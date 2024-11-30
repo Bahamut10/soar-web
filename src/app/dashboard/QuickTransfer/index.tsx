@@ -83,6 +83,7 @@ export default function QuickTransfer({
 
   const [selectedContact, setSelectedContact] = useState(0);
   const [amount, setAmount] = useState<number | string>('');
+  const [customError, setCustomError] = useState<{ message?: string }>({});
 
   const { mutateAsync: quickTransfer, isPending } = useAPIPostQuickTransfer();
 
@@ -91,11 +92,24 @@ export default function QuickTransfer({
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === '')
+      setCustomError({
+        message: 'Amount required',
+      });
+    else setCustomError({});
     setAmount(Number(e.target.value));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!amount) {
+      setCustomError({
+        message: 'Amount required',
+      });
+
+      return;
+    }
 
     if (selectedContact <= 0) {
       toast.error('Please select a contact to do a quick transfer!');
@@ -108,7 +122,7 @@ export default function QuickTransfer({
         {
           onSuccess: ({ data }) => {
             toast.success(
-              `Transferred $${amount} Successfully to ${data.name}!`
+              `$${amount} successfully transferred to ${data.name}!`
             );
             setAmount('');
           },
@@ -140,8 +154,12 @@ export default function QuickTransfer({
         <Loading />
       ) : (
         <>
-          <div className="max-[344px]:flex-col flex gap-8 items-center">
-            <div className="max-[550px]:w-[230px] max-[550px]:gap-8 laptop:max-desktop:w-[240px] flex gap-10 w-[400px] mx-auto overflow-hidden">
+          <div className="max-[550px]:flex-col flex gap-5 items-center">
+            <div
+              className={clsx(
+                `flex gap-8 w-[264px] min-[550px]:max-laptop:w-[369px] desktop:w-[400px] mx-auto overflow-hidden`
+              )}
+            >
               {data?.map((person) => (
                 <UserProfile
                   key={person.id}
@@ -154,7 +172,7 @@ export default function QuickTransfer({
                 />
               ))}
             </div>
-            {moveLeft <= sumOfTotalProfileToSkip ? (
+            {moveLeft < sumOfTotalProfileToSkip ? (
               <span
                 role="button"
                 aria-label="Slide to the right"
@@ -178,7 +196,7 @@ export default function QuickTransfer({
               </span>
             )}
           </div>
-          <div className="max-[344px]:flex-col flex justify-between items-center mt-7">
+          <div className="max-[344px]:flex-col max-[344px]:gap-2 flex justify-between items-center mt-7">
             <Text variant={TEXT_VARIANTS.BODY} className="text-night-charcoal">
               Write Amount
             </Text>
@@ -191,7 +209,7 @@ export default function QuickTransfer({
                   value={amount}
                   onChange={handleChange}
                   aria-label="Amount to send"
-                  required
+                  error={customError?.message || ''}
                 />
                 <Button
                   type="submit"

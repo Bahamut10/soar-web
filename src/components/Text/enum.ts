@@ -24,10 +24,6 @@ export const TEXT_VARIANTS = {
     element: 'h5' as keyof JSX.IntrinsicElements,
     className: 'laptop:text-h5',
   },
-  // HEADING6: {
-  //   element: 'h6' as keyof JSX.IntrinsicElements,
-  //   className: 'laptop:text-h6',
-  // },
   SUBHEADING: {
     element: 'p' as keyof JSX.IntrinsicElements,
     className: 'laptop:text-subheading',

@@ -79,12 +79,16 @@ export default function EditProfile() {
               label="Your Name"
               type="text"
               aria-required="true"
+              error={errors.name && errors.name.message}
+              aria-invalid={errors.name ? 'true' : 'false'}
             />
             <Input
               {...register('email')}
               label="Email"
               type="email"
               aria-required="true"
+              error={errors.email && errors.email.message}
+              aria-invalid={errors.email ? 'true' : 'false'}
             />
             <div className="flex flex-col">
               <label className="mb-3">Date of Birth</label>

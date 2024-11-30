@@ -21,9 +21,7 @@ export default function useSliding({
     return 2;
   }, [breakpoint]);
 
-  const profileWidth = 120;
-
-  const profileWidthToSkip = 140;
+  const profileWidth = 132;
 
   const sumOfTotalProfileToSkip = useMemo(() => {
     const val = contacts?.length - showingProfileAmount;
@@ -32,7 +30,7 @@ export default function useSliding({
 
   const handleSlideLeft = () => {
     if (moveLeft <= sumOfTotalProfileToSkip)
-      setMoveLeft((prev) => prev + profileWidthToSkip);
+      setMoveLeft((prev) => prev + profileWidth);
   };
 
   const handleSlideRight = () => {

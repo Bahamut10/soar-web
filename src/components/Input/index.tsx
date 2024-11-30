@@ -23,17 +23,19 @@ export default function InputWithRef(
       {label && (
         <label className="block text-body text-charcoal mb-3">{label}</label>
       )}
-      <input
-        ref={ref}
-        className={clsx(
-          'p-3 text-stormy-grey text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0',
-          className
-        )}
-        {...restProps}
-      />
-      <Text variant={TEXT_VARIANTS.CAPTION} className="text-rose-red">
-        {error}
-      </Text>
+      <div>
+        <input
+          ref={ref}
+          className={clsx(
+            'p-3 text-stormy-grey text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0',
+            className
+          )}
+          {...restProps}
+        />
+        <Text variant={TEXT_VARIANTS.CAPTION} className="block text-rose-red">
+          {error}
+        </Text>
+      </div>
       {rightIcon ? rightIcon : <></>}
     </div>
   );

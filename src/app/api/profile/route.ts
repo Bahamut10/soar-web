@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
   });
 }
 
-// since updating profile needs to handle form data and it needs 3rd party library, here we only simulate a successful data update with timeout set to 3s as the processing time
+// Updating a profile typically involves handling form data, which requires a third-party library. Here, we simulate a successful data update by using a timeout set to 3 seconds to represent the processing time.
 export async function POST(request: NextRequest) {
   const cookies = parse(request.headers.get('cookie') || '');
   const token = cookies.token;
@@ -65,10 +65,10 @@ export async function POST(request: NextRequest) {
     (user) => user.id.toString() === _token?.id
   )[0];
 
-  // Update the user data here, this console.log is intended as the simulation to consume the user object
+  // Update the user data here. The console.log is used to simulate consuming the user object.
   console.log(user);
 
-  // this timeout is only for updating database data simulation only
+  // This timeout is solely for simulating the process of updating database data.
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return NextResponse.json(

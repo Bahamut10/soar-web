@@ -88,7 +88,10 @@ export default function Sidebar() {
         <MdTask className="text-charcoal" size={35} />
         <Text
           variant={TEXT_VARIANTS.HEADING4}
-          className="text-navy-blue font-extrabold max-desktop:hidden"
+          className={clsx(
+            'text-navy-blue font-extrabold',
+            !isNavbarOpen ? 'max-desktop:hidden' : ''
+          )}
         >
           Soar Task
         </Text>

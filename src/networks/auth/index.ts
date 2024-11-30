@@ -1,8 +1,8 @@
 import { fetch } from '../fetch';
 
 class Auth {
+  // This login method doesn't require a form, as it is solely for token simulation.
   static login() {
-    // this login mutation doesn't take any form as it is only for token simulation only
     return fetch.post('/auth');
   }
 }
