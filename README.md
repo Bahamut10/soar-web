@@ -46,44 +46,40 @@ Try the live demo [here](https://soar-web-blush.vercel.app/dashboard)
    - The **Dashboard** and **Settings** pages are fully completed.
    - Other sidebar menu items redirect to a custom **"Not Found/Under Construction"** page.
 
-9. **Form Validation Messages**:
+9. **Tabs**:
 
-   - The required fields use the default browser validation messages to save development time.
+   - The **Preferences** and **Settings** tabs are included but marked as under construction.
 
-10. **Tabs**:
-
-    - The **Preferences** and **Settings** tabs are included but marked as under construction.
-
-11. **Card List Design**:
+10. **Card List Design**:
 
     - The **"My Cards"** section on the Dashboard is non-scrollable to encourage users to view the full card list on a dedicated **Card List** page via the "See All" button.
 
-12. **Card List Page**:
+11. **Card List Page**:
 
     - A simple **Card List** page is added to allow users to view their full list of cards without scrolling through the Dashboard.
     - Pagination is not implemented, as the dummy API simulates limited data.
     - In production, implementing pagination is considered best practice.
 
-13. **Recent Transactions**:
+12. **Recent Transactions**:
 
     - The **Recent Transactions** section is scrollable but does not include pagination, as it is intended to display only a few recent activities.
 
-14. **Dummy APIs**:
+13. **Dummy APIs**:
 
     - The project uses **dummy APIs** to simulate data flow and application integration.
 
-15. **Login Simulation**:
+14. **Login Simulation**:
 
     - A **Login endpoint** is included to simulate the generation of an access token for use across various pages.
     - For demonstration purposes, this endpoint is invoked in the root component instead of during a real login process.
     - This approach is acknowledged as unsuitable for production.
 
-16. **Authentication**:
+15. **Authentication**:
 
     - A hardcoded **JWT token** is used for simulation purposes and stored in an **HttpOnly cookie** to simulate best practices.
     - The cookie's `maxAge` is approximately one year, ensuring extended access during testing.
 
-17. **Pagination**:
+16. **Pagination**:
     - Pagination is omitted in the **Card List** and **Recent Transactions** sections due to the limited data provided by the dummy API. However, it is acknowledged that pagination is a critical feature for production applications.
 
 ## **Installation**
