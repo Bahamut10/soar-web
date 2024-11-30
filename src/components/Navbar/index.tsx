@@ -77,6 +77,7 @@ export default function Navbar() {
             aria-hidden="true"
           />
         }
+        // No onChange is needed as this input field is purely for presentation purposes.
         // onChange={handleChange}
       />
     );
