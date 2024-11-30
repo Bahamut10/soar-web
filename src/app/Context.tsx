@@ -10,12 +10,16 @@ import React, {
 interface RootContextTypes {
   isNavbarOpen: boolean;
   setIsNavbarOpen: Dispatch<SetStateAction<boolean>>;
+  isLoginSuccess: boolean;
+  setIsLoginSuccess: Dispatch<SetStateAction<boolean>>;
   toggleNavbar: () => void;
 }
 
 export const RootContext = createContext<RootContextTypes>({
   isNavbarOpen: false,
   setIsNavbarOpen: () => {},
+  isLoginSuccess: false,
+  setIsLoginSuccess: () => {},
   toggleNavbar: () => {},
 });
 
@@ -25,6 +29,7 @@ export default function RootContextProvider({
   children: ReactNode;
 }) {
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
   const toggleNavbar = useCallback(() => {
     setIsNavbarOpen(!isNavbarOpen);
@@ -34,9 +39,11 @@ export default function RootContextProvider({
     return {
       isNavbarOpen,
       setIsNavbarOpen,
+      isLoginSuccess,
+      setIsLoginSuccess,
       toggleNavbar,
     };
-  }, [isNavbarOpen, toggleNavbar]);
+  }, [isLoginSuccess, isNavbarOpen, toggleNavbar]);
 
   return <RootContext.Provider value={_value}>{children}</RootContext.Provider>;
 }

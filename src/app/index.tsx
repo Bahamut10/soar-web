@@ -2,29 +2,33 @@
 
 import Sidebar from '@/components/Sidebar';
 
-import RootContextProvider, { useRootContext } from './Context';
+import ErrorFallback from '@/components/Fallback';
 import Navbar from '@/components/Navbar';
-import { ReactNode, useCallback, useEffect } from 'react';
+import { useAPILogin } from '@/networks/auth/useAPIAuth';
+import { queryClient } from '@/utils/query-client';
+import { QueryClientProvider } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from '@/utils/query-client';
+import { ReactNode, useCallback, useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAPILogin } from '@/networks/auth/useAPIAuth';
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from '@/components/Fallback';
+import RootContextProvider, { useRootContext } from './Context';
 
 function Content({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { isNavbarOpen } = useRootContext();
+  const { isNavbarOpen, setIsLoginSuccess } = useRootContext();
 
   // This method is intended to be called during user login. However, since there's no login mechanism implemented and this is solely for token simulation purposes, we invoke this API here.
   const { mutateAsync: login } = useAPILogin();
 
   const handleLogin = useCallback(async () => {
-    await login();
-  }, [login]);
+    await login(undefined, {
+      onSuccess: () => {
+        setIsLoginSuccess(true);
+      },
+    });
+  }, [login, setIsLoginSuccess]);
 
   // This is to simulate login event
   useEffect(() => {
