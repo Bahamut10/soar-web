@@ -57,7 +57,7 @@ export default function TransactionItem(props: TransactionItemProps) {
       </div>
       <Text
         variant={TEXT_VARIANTS.BODY}
-        className={clsx('text-right flex-1', _amountColor)}
+        className={clsx('text-right flex-1 whitespace-nowrap', _amountColor)}
       >
         {types === TRANSACTION_TYPES.OUTFLOW
           ? `-$${formatCurrency(amount)}`
