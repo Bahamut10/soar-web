@@ -47,8 +47,11 @@ function MobileNav() {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { isLoginSuccess } = useRootContext();
 
-  const { data: profileData } = useAPIGetProfile();
+  const { data: profileData } = useAPIGetProfile({
+    enabled: isLoginSuccess,
+  });
   const profile: ProfileStruct = profileData?.data;
 
   const navbarTitle = useMemo(() => {
