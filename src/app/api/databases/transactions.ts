@@ -16,7 +16,7 @@ export const transactions = [
     types: TRANSACTION_TYPES.OUTFLOW,
     created_at: new Date(),
     source: TRANSACTION_SOURCES.CARD,
-    subject: '',
+    description: 'Deposit from my Card',
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ export const transactions = [
     types: TRANSACTION_TYPES.INFLOW,
     created_at: new Date(),
     source: TRANSACTION_SOURCES.PAYPAL,
-    subject: '',
+    description: 'Deposit Paypal',
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ export const transactions = [
     types: TRANSACTION_TYPES.INFLOW,
     created_at: new Date(),
     source: TRANSACTION_SOURCES.OTHERS,
-    subject: 'Jemi Wilson',
+    description: 'Jemi Wilson',
   },
   {
     id: 4,
@@ -40,6 +40,6 @@ export const transactions = [
     types: TRANSACTION_TYPES.OUTFLOW,
     created_at: new Date(),
     source: TRANSACTION_SOURCES.OTHERS,
-    subject: 'Someone Else',
+    description: 'Someone Else',
   },
 ];
