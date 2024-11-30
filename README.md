@@ -87,7 +87,7 @@ Try the live demo [here](https://soar-web-blush.vercel.app/dashboard)
 1. Clone the repository:
 
    ```bash
-   git clone <https://github.com/Bahamut10/soar-web.git>
+   git clone https://github.com/Bahamut10/soar-web.git
    ```
 
 2. Navigate to the project directory:
