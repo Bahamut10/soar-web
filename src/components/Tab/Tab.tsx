@@ -15,7 +15,7 @@ export function TabHeader({
     <ul
       role="tablist"
       className={clsx(
-        'max-tablet:justify-between max-laptop:gap-8 overflow-auto flex gap-16 border-0 border-b-[1px] border-solid border-night-charcoal overflow-x-auto',
+        'max-tablet:gap-4 max-laptop:gap-8 overflow-auto flex gap-16 border-0 border-b-[1px] border-solid border-night-charcoal overflow-x-auto',
         className
       )}
     >
