@@ -10,6 +10,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Controller } from 'react-hook-form';
 import { MdEdit } from 'react-icons/md';
 import useEditProfile from './useEditProfile';
+import Text from '@/components/Text';
+import { TEXT_VARIANTS } from '@/components/Text/enum';
 
 export default function EditProfile() {
   const {
@@ -96,15 +98,24 @@ export default function EditProfile() {
                 name="dateOfBirth"
                 control={control}
                 render={({ field: { onChange, value, ref } }) => (
-                  <DatePicker
-                    selected={value}
-                    onChange={onChange}
-                    dateFormat="dd MMMM yyyy"
-                    placeholderText="Select a date"
-                    ref={ref}
-                    className="p-3 text-stormy-grey text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0"
-                    aria-required="true"
-                  />
+                  <>
+                    <DatePicker
+                      selected={value}
+                      onChange={onChange}
+                      dateFormat="dd MMMM yyyy"
+                      placeholderText="Select a date"
+                      ref={ref}
+                      className="p-3 text-stormy-grey text-sm border border-rainy-grey rounded-2xl w-full focus:outline-none focus:ring-0"
+                      aria-required="true"
+                      aria-invalid={errors.dateOfBirth ? 'true' : 'false'}
+                    />
+                    <Text
+                      variant={TEXT_VARIANTS.CAPTION}
+                      className="block text-rose-red"
+                    >
+                      {errors.dateOfBirth && errors.dateOfBirth.message}
+                    </Text>
+                  </>
                 )}
               />
             </div>
@@ -112,12 +123,16 @@ export default function EditProfile() {
               {...register('permanentAddress')}
               label="Permanent Address"
               type="text"
+              error={errors.permanentAddress && errors.permanentAddress.message}
+              aria-invalid={errors.permanentAddress ? 'true' : 'false'}
               aria-required="true"
             />
             <Input
               {...register('postalCode')}
               label="Postal Code"
               type="text"
+              error={errors.postalCode && errors.postalCode.message}
+              aria-invalid={errors.postalCode ? 'true' : 'false'}
               aria-required="true"
             />
           </div>
@@ -126,6 +141,8 @@ export default function EditProfile() {
               {...register('username')}
               label="User Name"
               type="text"
+              error={errors.username && errors.username.message}
+              aria-invalid={errors.username ? 'true' : 'false'}
               aria-required="true"
             />
             <Input
@@ -139,18 +156,24 @@ export default function EditProfile() {
               {...register('presentAddress')}
               label="Present Address"
               type="text"
+              error={errors.presentAddress && errors.presentAddress.message}
+              aria-invalid={errors.presentAddress ? 'true' : 'false'}
               aria-required="true"
             />
             <Input
               {...register('city')}
               label="City"
               type="text"
+              error={errors.city && errors.city.message}
+              aria-invalid={errors.city ? 'true' : 'false'}
               aria-required="true"
             />
             <Input
               {...register('country')}
               label="Country"
               type="text"
+              error={errors.country && errors.country.message}
+              aria-invalid={errors.country ? 'true' : 'false'}
               aria-required="true"
             />
           </div>
